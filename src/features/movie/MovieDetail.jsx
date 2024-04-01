@@ -42,20 +42,22 @@ export default function MovieDetail() {
 						</p>
 					</div>
 					<div className="imageDetails">
-						<img src="https://static.tvmaze.com/uploads/images/original_untouched/1/3603.jpg" />
+						<img src={movie?.poster} />
 						<div className="ratingStars">
 							{'★'.repeat(movie?.rating) + '☆'.repeat(5 - movie?.rating)}
 						</div>
 					</div>
 				</div>
+
 				<div className="synopsisDetail">
+					<h3>Synopsis :</h3>
 					<p>{movie?.synopsis}</p>
 				</div>
 				<section className="trailerDetail">
 					<iframe
 						width="560"
 						height="315"
-						src="https://www.youtube.com/embed/n9xhJrPXop4?si=-_UikpPY2KNkMsjz"
+						src={movie?.trailer}
 						title="YouTube video player"
 						frameborder="0"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

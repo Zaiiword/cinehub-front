@@ -6,6 +6,8 @@
 
 .title {
     font-weight: bold;
+    border-bottom: 1px solid;
+    padding-bottom: 10px;
 }
 
 .textDetails{
@@ -17,11 +19,15 @@
 .infoDetail {
     display: flex;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .firstDetails {
     display: flex;
     justify-content: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid;
+    
 }
 .imageDetails img {
     width: 200px;
@@ -37,15 +43,18 @@
 }
 
 .synopsisDetail {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: 1px solid;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 5% 10%;
 }
 
 .trailerDetail {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-top: 1px solid;
+    padding-top: 40px;
 }
 
 
@@ -53,11 +62,13 @@
 /* COMMENTS */
 
 .commentDetail {
-    margin-top: 20px;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-top: 1px solid;
+    padding-top: 20px;
 }
 
 .commentForm {
