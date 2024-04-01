@@ -43,7 +43,7 @@ button {
   padding: 10px;
 }
 
-.movie-list { 
+.showList { 
   display: flex; 
   flex-wrap: wrap; 
   justify-content: center; 

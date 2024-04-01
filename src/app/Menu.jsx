@@ -10,17 +10,17 @@ export default function Menu() {
 		navigate(`/resultats/${search.current.value}`);
 	}
 	return (
-		<div class="header">
-			<div class="right-header">
-				<img src="log2.png" className="logo" alt="Logo du site" />
+		<div className="header">
+			<div className="right-header">
+				<img src="/images/icon.png" className="logo" alt="Logo du site" />
 				<h1>CineHub</h1>
 			</div>
-			<div class="left-header">
-				<form action="">
+			<div className="left-header">
+				<form className="searchBar" action="">
 					<input type="search" required></input>
-					<i class="fa fa-search"></i>
+					<i className="fa fa-search"></i>
 				</form>
-				<div class="svg">
+				<div className="svg">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						height="30"
