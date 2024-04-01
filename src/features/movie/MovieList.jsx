@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import Serie from './Serie';
-import Header from './Header';
 import { useNavigate } from 'react-router-dom';
+import MovieTag from './MovieTag';
 
-export default function Main() {
+export default function MovieList() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [movies, setMovies] = useState([]);
 	useEffect(() => {
@@ -17,14 +16,11 @@ export default function Main() {
 
 	return (
 		<>
-			<header>
-				<Header />
-			</header>
 			<div className="pageContainer">
 				<div className="pageContent">
 					<section className={isLoading ? 'showList is-loading' : 'showList'}>
 						{movies.map(movie => (
-							<Serie serie={movie} key={movie.id} />
+							<MovieTag serie={movie} key={movie.id} />
 						))}
 					</section>
 				</div>

@@ -1,7 +1,7 @@
-export default function Serie(serie) {
+export default function MovieTag(serie) {
 	const episode = serie.serie;
 	return (
-		<a href={`/series/${episode.id}`} className="showThumbnail">
+		<a href={`/movie/${episode.id}`} className="showThumbnail">
 			<header>
 				<img src={episode?.image?.original} className="thumbnail" />
 				<div className="summary">{episode.summary}</div>

@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function header() {
+export default function Menu() {
 	const navigate = useNavigate();
 	const search = useRef(null);
 
@@ -10,7 +10,7 @@ export default function header() {
 		navigate(`/resultats/${search.current.value}`);
 	}
 	return (
-		<>
+		<header>
 			<nav>
 				<h1 className="logo">
 					<a href="/">
@@ -24,6 +24,6 @@ export default function header() {
 					<button>chercher</button>
 				</form>
 			</section>
-		</>
+		</header>
 	);
 }
