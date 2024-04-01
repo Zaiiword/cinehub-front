@@ -1,0 +1,36 @@
+
+.title {
+    font-weight: bold;
+}
+
+.textDetails{
+    margin: 10px;
+    width: 50%;
+
+}
+
+.infoDetail {
+    display: flex;
+    justify-content: space-between;
+}
+
+.firstDetails {
+    display: flex;
+    justify-content: space-between;
+}
+.imageDetails img {
+    width: 200px;
+    height: 300px;
+}
+
+.ratingStars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.synopsisDetail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
