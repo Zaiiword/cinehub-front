@@ -1,18 +1,12 @@
-export default function MovieTag(serie) {
-	const episode = serie.serie;
+export default function MovieTag(movie) {
+	movie = movie.movie;
 	return (
-		<a href={`/movie/${episode.id}`} className="showThumbnail">
-			<header>
-				<img src={episode?.image?.original} className="thumbnail" />
-				<div className="summary">{episode.summary}</div>
-			</header>
-			<section className="infos">
-				<h3>
-					{episode.name}{' '}
-					<span className="rating">{episode?.rating?.average}</span>
-				</h3>
-				<time dateTime="2014-09-25">{episode.premiered}</time>
-			</section>
-		</a>
+		<div className="movie">
+			<img src={movie.image} alt={movie.title} />
+			<div className="movie-title">{movie.title}</div>
+			<div className="star-rating">
+				{'★'.repeat(movie.rating) + '☆'.repeat(5 - movie.rating)}
+			</div>
+		</div>
 	);
 }

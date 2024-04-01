@@ -5,7 +5,7 @@ body {
 }
 
 .header { padding: 10px; 
-  display: flex; 
+  display: flex;  
   justify-content: space-between; 
   align-items: center; 
   background-color: #001C40; 
