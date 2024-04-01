@@ -4,7 +4,8 @@ body {
   background-color: #f4f4f4; 
 }
 
-.header { padding: 10px; 
+.header { 
+  padding: 10px; 
   display: flex;  
   justify-content: space-between; 
   align-items: center; 

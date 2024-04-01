@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Menu() {
 	const navigate = useNavigate();
@@ -11,10 +11,12 @@ export default function Menu() {
 	}
 	return (
 		<div className="header">
-			<div className="right-header">
-				<img src="/images/icon.png" className="logo" alt="Logo du site" />
-				<h1>CineHub</h1>
-			</div>
+			<Link to="/">
+				<div className="right-header">
+					<img src="/images/icon.png" className="logo" alt="Logo du site" />
+					<h1>CineHub</h1>
+				</div>
+			</Link>
 			<div className="left-header">
 				<form className="searchBar" action="">
 					<input type="search" required></input>
