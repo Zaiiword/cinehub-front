@@ -63,13 +63,24 @@ export default function MovieDetail() {
 						allowfullscreen
 					></iframe>
 				</section>
-				<section className="commentForm">
-					<form>
-						<textarea placeholder="Comment"></textarea>
-						<button>Envoyer</button>
+				<section className="commentDetail">
+					<form className="commentForm">
+						<textarea
+							className="commentTextArea"
+							placeholder="Add a comment..."
+						></textarea>
+						<button class="commentButton">
+							<i class="fa-regular fa-paper-plane"></i>
+						</button>
 					</form>
+					<section className="commentList">
+						{Array.from({ length: 10 }).map((_, index) => (
+							<div key={index} className="commentItem">
+								<p className="commentText">Comment {index + 1}</p>
+							</div>
+						))}
+					</section>
 				</section>
-				<section className="comments"></section>
 			</div>
 		</div>
 	);

@@ -84,7 +84,7 @@ button {
 }
 
 
-form{
+.searchBar{
   position: relative;
   top: 25px;
   left: 50%;
@@ -130,19 +130,19 @@ input{
   transition: all 1s;
 }
 
-form:hover,
-form:valid{
+.searchBar:hover,
+.searchBar:valid{
   width: 200px;
   cursor: pointer;
 }
 
-form:hover input,
-form:valid input{
+.searchBar:hover input,
+.searchBar:valid input{
   display: block;
 }
 
-form:hover .fa,
-form:valid .fa{
+.searchBar:hover .fa,
+.searchBar:valid .fa{
   background: #001C40;
   color: white;
 }

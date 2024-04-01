@@ -1,3 +1,8 @@
+.pageContent {
+    margin: 20px;
+}
+
+/* MOVIE INFORMATIONS */
 
 .title {
     font-weight: bold;
@@ -6,7 +11,7 @@
 .textDetails{
     margin: 10px;
     width: 50%;
-
+    margin-right: 50px;
 }
 
 .infoDetail {
@@ -16,7 +21,7 @@
 
 .firstDetails {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 .imageDetails img {
     width: 200px;
@@ -27,10 +32,62 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 2em;
+    color: #FFD700;
 }
 
 .synopsisDetail {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.trailerDetail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* COMMENTS */
+
+.commentDetail {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.commentForm {
+    width: 80%;
+    margin: 10px;
+    display: flex;
+    flex-direction: row;    
+}
+
+.commentTextArea {
+    border: none;
+    font-size: 15px;
+    width: 100%;
+}
+
+.commentButton {
+    margin: 0;
+    padding: 10px;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.commentList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.commentItem {
+    margin: 20px;
 }
