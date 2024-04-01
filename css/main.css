@@ -1,3 +1,9 @@
 a:visited {
     color: inherit;
 }
+
+footer p {
+    font-size: small;
+    text-align: right;
+    margin-right: 20px;
+}
