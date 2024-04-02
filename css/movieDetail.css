@@ -21,6 +21,10 @@
     justify-content: space-between;
     gap: 10px;
 }
+.category {
+    font-weight: bold;
+    color: var(--dark-blue);
+}
 
 .firstDetails {
     display: flex;
