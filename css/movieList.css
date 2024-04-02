@@ -9,7 +9,7 @@ body {
   display: flex;  
   justify-content: space-between; 
   align-items: center; 
-  background-color: #001C40; 
+  background-color: var(--dark-blue); 
   color: white; 
 }
 
@@ -125,7 +125,7 @@ input{
   top: 0;
   right: 0;
   border-radius: 50%;
-  color: #001C40;
+  color: var(--dark-blue);
   text-align: center;
   font-size: 1.2em;
   transition: all 1s;
@@ -144,7 +144,7 @@ input{
 
 .searchBar:hover .fa,
 .searchBar:valid .fa{
-  background: #001C40;
+  background: var(--dark-blue);
   color: white;
 }
 

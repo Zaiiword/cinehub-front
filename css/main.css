@@ -1,3 +1,11 @@
+:root {
+    --gray: #dadada40;
+	--dark-gray: #707070;
+    --gold : #FFD700;
+    --dark-blue: #001C40;
+}
+
+
 a:visited {
     color: inherit;
 }
