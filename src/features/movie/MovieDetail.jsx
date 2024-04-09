@@ -5,9 +5,9 @@ export default function MovieDetail() {
 	const movieId = useParams().id;
 	const [movie, setMovie] = useState();
 	const [isLoading, setIsLoading] = useState(false);
+	const [ratingStars, setRatingStars] = useState(0);
 
 	useEffect(() => {
-		console.log(isLoading);
 		setIsLoading(true);
 		fetch(`http://localhost:8080/movie/${movieId}`)
 			.then(response => response.json())
@@ -16,9 +16,19 @@ export default function MovieDetail() {
 				setMovie(data);
 			})
 			.then(console.log(movie))
-			.then(() => setIsLoading(false))
-			.then(() => console.log(isLoading));
+			.then(() => setIsLoading(false));
 	}, []);
+
+	function handleCommentSubmit() {
+		event.preventDefault();
+		let selectedRate = document.querySelector(
+			'input[name="rating"]:checked'
+		).value;
+		setRatingStars(selectedRate);
+	}
+	useEffect(() => {
+		console.log(ratingStars);
+	}, [ratingStars]);
 	return (
 		<div className="pageContainer">
 			{isLoading ? (
@@ -78,10 +88,67 @@ export default function MovieDetail() {
 								className="commentTextArea"
 								placeholder="Add a comment..."
 							></textarea>
-							<button className="commentButton">
+							<button className="commentButton" onClick={handleCommentSubmit}>
 								<i className="fa-regular fa-paper-plane"></i>
 							</button>
 						</form>
+						<div className="commentRating">
+							<fieldset class="rating">
+								<input type="radio" id="star5" name="rating" value="5" />
+								<label
+									class="full"
+									for="star5"
+									title="Perfect - 5 stars"
+								></label>
+								<input type="radio" id="star4half" name="rating" value="4.5" />
+								<label
+									class="half"
+									for="star4half"
+									title="Awesome - 4.5 stars"
+								></label>
+								<input type="radio" id="star4" name="rating" value="4" />
+								<label
+									class="full"
+									for="star4"
+									title="Very good - 4 stars"
+								></label>
+								<input type="radio" id="star3half" name="rating" value="3.5" />
+								<label
+									class="half"
+									for="star3half"
+									title="Good - 3.5 stars"
+								></label>
+								<input type="radio" id="star3" name="rating" value="3" />
+								<label class="full" for="star3" title="Good - 3 stars"></label>
+								<input type="radio" id="star2half" name="rating" value="2.5" />
+								<label
+									class="half"
+									for="star2half"
+									title="Mid - 2.5 stars"
+								></label>
+								<input type="radio" id="star2" name="rating" value="2" />
+								<label class="full" for="star2" title="Meh - 2 stars"></label>
+								<input type="radio" id="star1half" name="rating" value="1.5" />
+								<label
+									class="half"
+									for="star1half"
+									title="Bad - 1.5 stars"
+								></label>
+								<input type="radio" id="star1" name="rating" value="1" />
+								<label
+									class="full"
+									for="star1"
+									title="Very bad - 1 star"
+								></label>
+								<input type="radio" id="starhalf" name="rating" value="0.5" />
+								<label
+									class="half"
+									for="starhalf"
+									title="Awful - 0.5 stars"
+								></label>
+							</fieldset>
+						</div>
+
 						<section className="commentList">
 							{Array.from({ length: 10 }).map((_, index) => (
 								<div key={index} className="commentItem">
