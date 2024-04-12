@@ -19,7 +19,7 @@ export default function Menu() {
 			</Link>
 			<div className="left-header">
 				<form className="searchBar" action="">
-					<input type="search" required></input>
+					<input type="search" required class="input-search"></input>
 					<i className="fa fa-search"></i>
 				</form>
 				<div className="svg">

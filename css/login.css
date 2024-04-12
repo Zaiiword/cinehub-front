@@ -1,0 +1,94 @@
+.auth-page {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.button-login {
+    margin-bottom: 20px; /* Space between buttons and form */
+}
+
+.auth-button {
+    padding: 10px 20px;
+    border: 1px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: -1px; /* Buttons close together */
+}
+
+/* Active state styles for the buttons */
+.auth-button-active {
+    background-color: #007bff;
+    color: white;
+    border-bottom: none;
+    z-index: 1; /* Ensure the active tab overlaps the inactive one */
+}
+
+.auth-button:not(.auth-button-active):hover {
+    background-color: #e7f0fd;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #d5d5d5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    max-width: 400px;
+    width: 100%;
+}
+
+.auth-label {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.auth-input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    display: block;
+    width: calc(100% - 22px); /* Account for padding and borders */
+}
+
+.auth-submit {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.auth-submit:hover {
+    background-color: #218838;
+}
+
+/* Input focus style */
+.auth-input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Button active style */
+.auth-button:active {
+    transform: scale(0.98);
+}
