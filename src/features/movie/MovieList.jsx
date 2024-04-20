@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MovieTag from './MovieTag';
+import axios from 'axios';
 
 export default function MovieList() {
 	const [movies, setMovies] = useState([]);
@@ -8,11 +9,11 @@ export default function MovieList() {
 
 	useEffect(() => {
 		setIsLoading(true);
-		fetch('http://localhost:8080/movie/summary?limit=8')
-			.then(response => response.json())
-			.then(data => setMovies(data))
-			.then(() => setIsLoading(false))
-			.catch(error => console.error('Error:', error));
+		axios
+			.get('http://localhost:8080/movie/summary?limit=8')
+			.then(response => setMovies(response.data)) // Note: Axios encapsule la réponse dans un objet `data`
+			.catch(error => console.error('Error:', error))
+			.finally(() => setIsLoading(false)); // Gérer le cas où le chargement est terminé dans finally
 	}, []);
 
 	return (

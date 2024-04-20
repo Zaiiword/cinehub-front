@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function AuthPage() {
 	const [isLogin, setIsLogin] = useState(true);
@@ -11,7 +12,28 @@ function AuthPage() {
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		// Handle login or registration logic here
+		const url = isLogin
+			? 'http://localhost:8080/login'
+			: 'http://localhost:8080/register';
+		const userData = isLogin
+			? { username, password }
+			: { username, password, firstName, lastName, email };
+
+		axios
+			.post(url, userData)
+			.then(response => {
+				localStorage.setItem('token', response.data.token);
+				console.log(isLogin ? 'Login successful' : 'Registration successful');
+				console.log(response.data.token);
+				sessionStorage.setItem('isAuthenticated', 'true');
+				// Rediriger vers le tableau de bord
+				window.location.href = '/';
+				// Rediriger ou mettre à jour l'état
+			})
+			.catch(error => {
+				console.error('Error:', error.response.data);
+				// Gérer l'affichage des messages d'erreur
+			});
 	};
 
 	const getButtonClass = loginState => {

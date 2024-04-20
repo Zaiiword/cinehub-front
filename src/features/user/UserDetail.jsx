@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function UserDetail() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [user, setUser] = useState(null);
 
 	useEffect(() => {
-		fetch('/api/user')
-			.then(response => response.json())
+		axios
+			.get('/api/user')
 			.then(data => {
 				setUser(data);
 				setIsLoading(false);

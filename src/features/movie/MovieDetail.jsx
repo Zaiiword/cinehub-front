@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export default function MovieDetail() {
 	const movieId = useParams().id;
@@ -9,11 +10,11 @@ export default function MovieDetail() {
 
 	useEffect(() => {
 		setIsLoading(true);
-		fetch(`http://localhost:8080/movie/${movieId}`)
-			.then(response => response.json())
+		axios
+			.get(`http://localhost:8080/movie/${movieId}`)
 			.then(data => {
 				console.log(data);
-				setMovie(data);
+				setMovie(data.data);
 			})
 			.then(console.log(movie))
 			.then(() => setIsLoading(false));

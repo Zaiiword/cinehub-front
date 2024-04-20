@@ -1,17 +1,10 @@
-// import React from 'react';
-// import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 
-// const isAuthenticated = () => {
-// 	return !!localStorage.getItem('authToken');
-// };
+function PrivateRoute({ children }) {
+	const isAuthenticated = sessionStorage.getItem('isAuthenticated');
 
-// const PrivateRoute = ({ component: Component, ...rest }) => (
-// 	<Route
-// 		{...rest}
-// 		render={props =>
-// 			isAuthenticated() ? <Component {...props} /> : <Redirect to="/login" />
-// 		}
-// 	/>
-// );
+	return isAuthenticated ? children : <Navigate replace to="/login" />;
+}
 
-// export default PrivateRoute;
+export default PrivateRoute;

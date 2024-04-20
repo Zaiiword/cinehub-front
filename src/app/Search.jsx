@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import MovieTag from '../features/movie/MovieTag';
+import axios from 'axios';
 
 export default function Search() {
 	const query = useParams().query;
@@ -10,9 +11,9 @@ export default function Search() {
 	useEffect(() => {
 		setIsLoading(true);
 		console.log('here');
-		fetch(`https://api.tvmaze.com/search/shows?q=${query}`)
-			.then(response => response.json())
-			.then(data => setSeries(data))
+		axios
+			.get(`https://api.tvmaze.com/search/shows?q=${query}`)
+			.then(response => setSeries(response.data))
 			.then(() => setIsLoading(false))
 			.catch(err => console.log(err));
 	}, [query]);
