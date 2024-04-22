@@ -10,6 +10,7 @@ export default function MovieDetail() {
 	const [movie, setMovie] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 	const [rating, setRating] = useState(0);
+	const [comment, setComment] = useState('');
 
 	function fetchMovie() {
 		axios
@@ -42,11 +43,26 @@ export default function MovieDetail() {
 				commentRef.current.value = '';
 				setRating(0);
 				fetchMovie();
+				console.log(movie.rating);
 			}); //to update the page with the new comment
 	}
 
 	const changeRating = newRating => {
 		setRating(newRating);
+	};
+
+	const handleLike = async reviewId => {
+		await axios.patch(
+			`http://localhost:8080/movie/${movie.id}/review/${reviewId}`,
+			{},
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+
+		fetchMovie();
 	};
 
 	return (
@@ -118,11 +134,12 @@ export default function MovieDetail() {
 								className="commentTextArea"
 								placeholder="Add a comment..."
 								ref={commentRef}
+								onChange={e => setComment(e.target.value)}
 							></textarea>
 							<button
 								className="commentButton"
 								onClick={handleCommentSubmit}
-								disabled={rating === 0 || !commentRef.current.value}
+								disabled={rating === 0 || comment === ''}
 							>
 								<i className="fa-regular fa-paper-plane"></i>
 							</button>
@@ -162,12 +179,11 @@ export default function MovieDetail() {
 									</div>
 									<div className="commentItemButtons">
 										<p className="likeCount">{review.likes}</p>
-										<button className="likesButtons likeButton">
-											<i className="fa-regular fa-thumbs-up"></i>
-										</button>
-										<p className="dislikeCount">{review.dislikes}</p>
-										<button className="likesButtons dislikeButton">
-											<i className="fa-regular fa-thumbs-down"></i>
+										<button
+											className="likesButtons likeButton"
+											onClick={() => handleLike(review.id)}
+										>
+											<i className="fa-regular fa-heart"></i>
 										</button>
 									</div>
 								</div>

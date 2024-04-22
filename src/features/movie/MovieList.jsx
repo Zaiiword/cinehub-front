@@ -22,7 +22,7 @@ export default function MovieList() {
 				<div className="pageContent">
 					<div className={isLoading ? 'showList is-loading' : 'showList'}>
 						{movies.map(movie => (
-							<MovieTag movie={movie} key={movie.title} />
+							<MovieTag movie={movie} key={movie.id} />
 						))}
 					</div>
 				</div>
