@@ -3,6 +3,7 @@ import MovieList from '../features/movie/MovieList';
 import Search from './Search';
 import MovieDetail from '../features/movie/MovieDetail';
 import Login from './Login';
+import Logout from './Logout';
 import PrivateRoute from '../features/PrivateRoute';
 
 export default function Navigator() {
@@ -33,6 +34,7 @@ export default function Navigator() {
 				}
 			/>
 			<Route path="/login" element={<Login />} />
+			<Route path="/logout" element={<Logout />} />
 		</Routes>
 	);
 }
