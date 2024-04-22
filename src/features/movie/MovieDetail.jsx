@@ -1,35 +1,54 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import ReactStars from 'react-rating-stars-component';
 
 export default function MovieDetail() {
 	const movieId = useParams().id;
+	const commentRef = useRef();
+
 	const [movie, setMovie] = useState();
 	const [isLoading, setIsLoading] = useState(false);
-	const [ratingStars, setRatingStars] = useState(0);
+	const [rating, setRating] = useState(0);
 
-	useEffect(() => {
-		setIsLoading(true);
+	function fetchMovie() {
 		axios
 			.get(`http://localhost:8080/movie/${movieId}`)
 			.then(data => {
-				console.log(data);
 				setMovie(data.data);
 			})
-			.then(console.log(movie))
 			.then(() => setIsLoading(false));
+	}
+
+	useEffect(() => {
+		setIsLoading(true);
+		fetchMovie();
 	}, []);
 
 	function handleCommentSubmit() {
 		event.preventDefault();
-		let selectedRate = document.querySelector(
-			'input[name="rating"]:checked'
-		).value;
-		setRatingStars(selectedRate);
+		const review = {
+			userId: '1', //TODO find from the token the user id in the back
+			rating: rating,
+			comment: commentRef.current.value,
+		};
+		axios
+			.post(`http://localhost:8080/movie/${movieId}/review`, review, {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
+			.then(() => {
+				commentRef.current.value = '';
+				setRating(0);
+				fetchMovie();
+			}); //to update the page with the new comment
 	}
-	useEffect(() => {
-		console.log(ratingStars);
-	}, [ratingStars]);
+
+	const changeRating = newRating => {
+		setRating(newRating);
+	};
+
 	return (
 		<div className="pageContainer">
 			{isLoading ? (
@@ -62,7 +81,17 @@ export default function MovieDetail() {
 						<div className="imageDetails">
 							<img src={movie?.poster} />
 							<div className="ratingStars">
-								{'★'.repeat(movie?.rating) + '☆'.repeat(5 - movie?.rating)}
+								<ReactStars
+									count={5}
+									value={movie?.rating}
+									size={40}
+									isHalf={true}
+									emptyIcon={<i className="far fa-star"></i>}
+									halfIcon={<i className="fa fa-star-half-alt"></i>}
+									fullIcon={<i className="fa fa-star"></i>}
+									activeColor="gold"
+									edit={false}
+								/>
 							</div>
 						</div>
 					</div>
@@ -88,72 +117,59 @@ export default function MovieDetail() {
 							<textarea
 								className="commentTextArea"
 								placeholder="Add a comment..."
+								ref={commentRef}
 							></textarea>
-							<button className="commentButton" onClick={handleCommentSubmit}>
+							<button
+								className="commentButton"
+								onClick={handleCommentSubmit}
+								disabled={rating === 0 || !commentRef.current.value}
+							>
 								<i className="fa-regular fa-paper-plane"></i>
 							</button>
 						</form>
 						<div className="commentRating">
-							<fieldset class="rating">
-								<input type="radio" id="star5" name="rating" value="5" />
-								<label
-									class="full"
-									for="star5"
-									title="Perfect - 5 stars"
-								></label>
-								<input type="radio" id="star4half" name="rating" value="4.5" />
-								<label
-									class="half"
-									for="star4half"
-									title="Awesome - 4.5 stars"
-								></label>
-								<input type="radio" id="star4" name="rating" value="4" />
-								<label
-									class="full"
-									for="star4"
-									title="Very good - 4 stars"
-								></label>
-								<input type="radio" id="star3half" name="rating" value="3.5" />
-								<label
-									class="half"
-									for="star3half"
-									title="Good - 3.5 stars"
-								></label>
-								<input type="radio" id="star3" name="rating" value="3" />
-								<label class="full" for="star3" title="Good - 3 stars"></label>
-								<input type="radio" id="star2half" name="rating" value="2.5" />
-								<label
-									class="half"
-									for="star2half"
-									title="Mid - 2.5 stars"
-								></label>
-								<input type="radio" id="star2" name="rating" value="2" />
-								<label class="full" for="star2" title="Meh - 2 stars"></label>
-								<input type="radio" id="star1half" name="rating" value="1.5" />
-								<label
-									class="half"
-									for="star1half"
-									title="Bad - 1.5 stars"
-								></label>
-								<input type="radio" id="star1" name="rating" value="1" />
-								<label
-									class="full"
-									for="star1"
-									title="Very bad - 1 star"
-								></label>
-								<input type="radio" id="starhalf" name="rating" value="0.5" />
-								<label
-									class="half"
-									for="starhalf"
-									title="Awful - 0.5 stars"
-								></label>
-							</fieldset>
+							<ReactStars
+								count={5}
+								onChange={changeRating}
+								size={24}
+								isHalf={true}
+								emptyIcon={<i className="far fa-star"></i>}
+								halfIcon={<i className="fa fa-star-half-alt"></i>}
+								fullIcon={<i className="fa fa-star"></i>}
+								activeColor="gold"
+							/>
 						</div>
 
 						<section className="commentList">
-							{Array.from({ length: 10 }).map((_, index) => (
+							{movie?.reviews.map((review, index) => (
 								<div key={index} className="commentItem">
-									<p className="commentText">Comment {index + 1}</p>
+									<div className="commentInformations">
+										<p className="commentText">{review.content}</p>
+										<ReactStars
+											count={5}
+											value={review.rating}
+											size={20}
+											isHalf={true}
+											emptyIcon={<i className="far fa-star"></i>}
+											halfIcon={<i className="fa fa-star-half-alt"></i>}
+											fullIcon={<i className="fa fa-star"></i>}
+											activeColor="gold"
+											edit={false}
+										/>
+										<p className="commentUser">
+											{review.user.firstName} {review.user.name}
+										</p>
+									</div>
+									<div className="commentItemButtons">
+										<p className="likeCount">{review.likes}</p>
+										<button className="likesButtons likeButton">
+											<i className="fa-regular fa-thumbs-up"></i>
+										</button>
+										<p className="dislikeCount">{review.dislikes}</p>
+										<button className="likesButtons dislikeButton">
+											<i className="fa-regular fa-thumbs-down"></i>
+										</button>
+									</div>
 								</div>
 							))}
 						</section>
