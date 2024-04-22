@@ -1,3 +1,5 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
 .pageContent {
     margin: 20px;
 }
@@ -106,11 +108,28 @@
 
 .commentItem {
     margin: 20px;
+    width: 20%;
+
+}
+
+.commentUser {
+    font-weight: bold;
+    color: var(--dark-blue);
+    font-size: 0.8em;
+}
+
+.commentItemButtons{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.likesButtons {
+    font-size: 0.8em;
 }
 
 /* Rating stars */
 
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 fieldset, label { margin: 0; padding: 0; }
 body{ margin: 20px; }
