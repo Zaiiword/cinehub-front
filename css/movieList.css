@@ -150,3 +150,8 @@ button {
 @media (min-width: 1001px) {
   .movie { width: 25%; }
 }
+
+
+.pageTitle {
+  padding: 10px;
+}

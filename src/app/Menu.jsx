@@ -7,7 +7,7 @@ export default function Menu() {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		navigate(`/resultats/${search.current.value}`);
+		navigate(`/results/${search.current.value}`);
 	}
 	return (
 		<div className="header">
@@ -18,8 +18,13 @@ export default function Menu() {
 				</div>
 			</Link>
 			<div className="left-header">
-				<form className="searchBar" action="">
-					<input type="search" required className="input-search"></input>
+				<form className="searchBar" onSubmit={handleSubmit}>
+					<input
+						type="search"
+						required
+						className="input-search"
+						ref={search}
+					></input>
 					<i className="fa fa-search"></i>
 				</form>
 				<div className="svg">

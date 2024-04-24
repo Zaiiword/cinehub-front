@@ -6,14 +6,14 @@ import axios from 'axios';
 export default function Search() {
 	const query = useParams().query;
 	const [isLoading, setIsLoading] = useState(false);
-	const [series, setSeries] = useState([]);
+	const [movies, setMovies] = useState([]);
 
 	useEffect(() => {
 		setIsLoading(true);
 		console.log('here');
 		axios
-			.get(`https://api.tvmaze.com/search/shows?q=${query}`)
-			.then(response => setSeries(response.data))
+			.get(`http://localhost:8080/movie/search?q=${query}`)
+			.then(response => setMovies(response.data))
 			.then(() => setIsLoading(false))
 			.catch(err => console.log(err));
 	}, [query]);
@@ -22,12 +22,13 @@ export default function Search() {
 		<>
 			<div className="pageContainer home">
 				<div className="pageTitle">
-					<h1>Recherche : &quot;{query} &quot;</h1>
+					<h2>Movies for &quot;{query}&quot; :</h2>
 				</div>
 				<div className="pageContent">
 					<section className={isLoading ? 'showList is-loading' : 'showList'}>
-						{series?.map(movie => (
-							<MovieTag serie={movie.show} key={movie.show.id} />
+						{console.log(movies)}
+						{movies.map(movie => (
+							<MovieTag movie={movie} key={movie.id} />
 						))}
 					</section>
 				</div>
