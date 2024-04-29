@@ -11,6 +11,7 @@ export default function MovieDetail() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [rating, setRating] = useState(0);
 	const [comment, setComment] = useState('');
+	const [user, setUser] = useState(null);
 
 	function fetchMovie() {
 		axios
@@ -24,6 +25,11 @@ export default function MovieDetail() {
 	useEffect(() => {
 		setIsLoading(true);
 		fetchMovie();
+
+		//get the user
+		axios.get('http://localhost:8080/user/me').then(response => {
+			setUser(response.data);
+		});
 	}, []);
 
 	function handleCommentSubmit() {
@@ -52,9 +58,10 @@ export default function MovieDetail() {
 	};
 
 	const handleLike = async reviewId => {
+		console.log(user);
 		await axios.patch(
 			`http://localhost:8080/movie/${movie.id}/review/${reviewId}`,
-			{},
+			{ user },
 			{
 				headers: {
 					'Content-Type': 'application/json',
@@ -178,7 +185,7 @@ export default function MovieDetail() {
 										</p>
 									</div>
 									<div className="commentItemButtons">
-										<p className="likeCount">{review.likes}</p>
+										<p className="likeCount">{review.likedBy.length}</p>
 										<button
 											className="likesButtons likeButton"
 											onClick={() => handleLike(review.id)}

@@ -6,9 +6,9 @@ import axios from 'axios';
 
 axios.interceptors.request.use(
 	config => {
-		const token = localStorage.getItem('token');
+		const token = localStorage.getItem('token'); // Récupérez le token du localStorage
 		if (token) {
-			config.headers['Authorization'] = `Bearer ${token}`;
+			config.headers.Authorization = `Bearer ${token}`; // Ajoutez le token à l'en-tête Authorization
 		}
 		return config;
 	},
