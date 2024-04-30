@@ -8,16 +8,23 @@ function AuthPage() {
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
+	const [message, setMessage] = useState('');
 
 	const handleSubmit = event => {
 		event.preventDefault();
 		const url = isLogin
 			? 'http://localhost:8080/login'
-			: 'http://localhost:8080/register';
+			: 'http://localhost:8080/user/register';
 		const userData = isLogin
 			? { username, password }
-			: { username, password, firstName, lastName, email };
+			: {
+					name: lastName,
+					firstName: firstName,
+					mail: username,
+					language: '',
+					password: password,
+					role: '',
+				};
 
 		axios
 			.post(url, userData)
@@ -26,9 +33,17 @@ function AuthPage() {
 				console.log(isLogin ? 'Login successful' : 'Registration successful');
 				console.log(response.data.token);
 				sessionStorage.setItem('isAuthenticated', 'true');
-				// Rediriger vers le tableau de bord
-				window.location.href = '/';
-				// Rediriger ou mettre à jour l'état
+				if (isLogin) {
+					// Rediriger vers le tableau de bord
+					window.location.href = '/';
+				} else {
+					// Effacer le formulaire et passer en mode connexion
+					setUsername('');
+					setPassword('');
+					setFirstName('');
+					setIsLogin(true);
+					setMessage('Registration successful !');
+				}
 			})
 			.catch(error => {
 				console.error('Error:', error.response.data);
@@ -42,6 +57,7 @@ function AuthPage() {
 
 	return (
 		<div className="auth-page">
+			{message && <div className="message">{message}</div>}
 			<div className="button-login">
 				<button
 					className={getButtonClass(true)}
@@ -104,7 +120,7 @@ function AuthPage() {
 								onChange={e => setLastName(e.target.value)}
 							/>
 						</label>
-						<label className="auth-label">
+						{/* <label className="auth-label">
 							Email:
 							<input
 								className="auth-input"
@@ -112,7 +128,7 @@ function AuthPage() {
 								value={email}
 								onChange={e => setEmail(e.target.value)}
 							/>
-						</label>
+						</label> */}
 					</>
 				)}
 				<input
