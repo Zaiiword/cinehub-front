@@ -25,12 +25,15 @@ export default function MovieDetail() {
 	useEffect(() => {
 		setIsLoading(true);
 		fetchMovie();
+		fetchUser();
+	}, []);
 
+	function fetchUser() {
 		//get the user
 		axios.get('http://localhost:8080/user/me').then(response => {
 			setUser(response.data);
 		});
-	}, []);
+	}
 
 	function handleCommentSubmit() {
 		event.preventDefault();
@@ -49,7 +52,6 @@ export default function MovieDetail() {
 				commentRef.current.value = '';
 				setRating(0);
 				fetchMovie();
-				console.log(movie.rating);
 			}); //to update the page with the new comment
 	}
 
@@ -58,10 +60,9 @@ export default function MovieDetail() {
 	};
 
 	const handleLike = async reviewId => {
-		console.log(user);
 		await axios.patch(
 			`http://localhost:8080/movie/${movie.id}/review/${reviewId}`,
-			{ user },
+			user,
 			{
 				headers: {
 					'Content-Type': 'application/json',
@@ -70,6 +71,16 @@ export default function MovieDetail() {
 		);
 
 		fetchMovie();
+	};
+
+	const handleWatchList = async () => {
+		await axios.post(`http://localhost:8080/user/watchlist/${movieId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		fetchUser();
 	};
 
 	return (
@@ -100,6 +111,9 @@ export default function MovieDetail() {
 								<span className="category">DURATION : </span>
 								<span>{movie?.duration}</span>
 							</p>
+							<button className="watchListButton " onClick={handleWatchList}>
+								<i className="fa-regular fa-clock"></i>
+							</button>
 						</div>
 						<div className="imageDetails">
 							<img src={movie?.poster} />
@@ -165,36 +179,47 @@ export default function MovieDetail() {
 						</div>
 
 						<section className="commentList">
-							{movie?.reviews.map((review, index) => (
-								<div key={index} className="commentItem">
-									<div className="commentInformations">
-										<p className="commentText">{review.content}</p>
-										<ReactStars
-											count={5}
-											value={review.rating}
-											size={20}
-											isHalf={true}
-											emptyIcon={<i className="far fa-star"></i>}
-											halfIcon={<i className="fa fa-star-half-alt"></i>}
-											fullIcon={<i className="fa fa-star"></i>}
-											activeColor="gold"
-											edit={false}
-										/>
-										<p className="commentUser">
-											{review.user.firstName} {review.user.name}
-										</p>
+							{movie?.reviews.map((review, index) => {
+								const isLikedByUser = review.likedBy.some(
+									like => like.id === user.id
+								);
+								return (
+									<div key={index} className="commentItem">
+										<div className="commentInformations">
+											<p className="commentText">{review.content}</p>
+											<ReactStars
+												count={5}
+												value={review.rating}
+												size={20}
+												isHalf={true}
+												emptyIcon={<i className="far fa-star"></i>}
+												halfIcon={<i className="fa fa-star-half-alt"></i>}
+												fullIcon={<i className="fa fa-star"></i>}
+												activeColor="gold"
+												edit={false}
+											/>
+											<p className="commentUser">
+												{review.user.firstName} {review.user.name}
+											</p>
+										</div>
+										<div className="commentItemButtons">
+											<p className="likeCount">{review.likedBy.length}</p>
+											<button
+												className="likesButtons likeButton"
+												onClick={() => handleLike(review.id)}
+											>
+												<i
+													className={
+														isLikedByUser
+															? 'fa-solid fa-heart'
+															: 'fa-regular fa-heart'
+													}
+												></i>
+											</button>
+										</div>
 									</div>
-									<div className="commentItemButtons">
-										<p className="likeCount">{review.likedBy.length}</p>
-										<button
-											className="likesButtons likeButton"
-											onClick={() => handleLike(review.id)}
-										>
-											<i className="fa-regular fa-heart"></i>
-										</button>
-									</div>
-								</div>
-							))}
+								);
+							})}
 						</section>
 					</section>
 				</div>

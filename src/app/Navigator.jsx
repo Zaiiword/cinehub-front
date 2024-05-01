@@ -7,6 +7,7 @@ import UserDetail from '../features/user/UserDetail';
 import Login from './Login';
 import Logout from './Logout';
 import PrivateRoute from '../features/PrivateRoute';
+import { UserWatchlist } from '../features/user/UserWatchlist';
 
 export default function Navigator() {
 	return (
@@ -43,6 +44,7 @@ export default function Navigator() {
 					</PrivateRoute>
 				}
 			/>
+			<Route path="/user/:id/watchlist" element={<UserWatchlist />} />
 			<Route path="/login" element={<Login />} />
 			<Route path="/logout" element={<Logout />} />
 		</Routes>

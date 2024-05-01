@@ -31,6 +31,13 @@ function UserDetail() {
 				<img src={user.profilePicture} alt="Profile" />
 			</div>
 			<EditUserForm />
+			<button
+				onClick={() => {
+					window.location.href = `/user/${user.id}/watchlist`;
+				}}
+			>
+				Watchlist
+			</button>
 		</>
 	);
 }
