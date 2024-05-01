@@ -83,12 +83,17 @@ export default function MovieDetail() {
 		fetchUser();
 	};
 
+	const isMovieInWatchlist = user?.watchlist.some(
+		watchlistMovie => watchlistMovie.id === movie.id
+	);
+
 	return (
 		<div className="pageContainer">
 			{isLoading ? (
 				<div className="is-loading"></div>
 			) : (
 				<div className="pageContent">
+					{console.log(user)}
 					<div className="firstDetails">
 						<div className="textDetails">
 							<h1 className="title">{movie?.name}</h1>
@@ -112,7 +117,13 @@ export default function MovieDetail() {
 								<span>{movie?.duration}</span>
 							</p>
 							<button className="watchListButton " onClick={handleWatchList}>
-								<i className="fa-regular fa-clock"></i>
+								<i
+									className={
+										isMovieInWatchlist
+											? 'fa-solid fa-clock'
+											: 'fa-regular fa-clock'
+									}
+								></i>
 							</button>
 						</div>
 						<div className="imageDetails">
