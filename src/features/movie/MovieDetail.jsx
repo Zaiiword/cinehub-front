@@ -93,7 +93,6 @@ export default function MovieDetail() {
 				<div className="is-loading"></div>
 			) : (
 				<div className="pageContent">
-					{console.log(user)}
 					<div className="firstDetails">
 						<div className="textDetails">
 							<h1 className="title">{movie?.name}</h1>

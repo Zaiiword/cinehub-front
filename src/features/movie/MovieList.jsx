@@ -1,27 +1,76 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import MovieTag from './MovieTag';
 import axios from 'axios';
 
 export default function MovieList() {
-	const [movies, setMovies] = useState([]);
+	const [genres, setGenres] = useState([]);
+	const [allMovies, setAllMovies] = useState([]);
+	const [displayedMovies, setDisplayedMovies] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const [selectedGenre, setSelectedGenre] = useState(null);
 
 	useEffect(() => {
+		fetchGenres();
+		fetchAllMovies();
+	}, []);
+
+	useEffect(() => {
+		if (selectedGenre) {
+			const filteredMovies = allMovies.filter(movie =>
+				movie.genres.some(genre => genre.id === Number(selectedGenre))
+			);
+			setDisplayedMovies(filteredMovies);
+		} else {
+			setDisplayedMovies(allMovies);
+		}
+	}, [selectedGenre, allMovies]);
+
+	function fetchGenres() {
+		axios.get('http://localhost:8080/movie/genres').then(response => {
+			setGenres(response.data);
+		});
+	}
+
+	function fetchAllMovies() {
 		setIsLoading(true);
 		axios
 			.get('http://localhost:8080/movie/summary?limit=8')
-			.then(response => setMovies(response.data)) // Note: Axios encapsule la réponse dans un objet `data`
+			.then(response => {
+				setAllMovies(response.data);
+				setDisplayedMovies(response.data);
+			})
 			.catch(error => console.error('Error:', error))
-			.finally(() => setIsLoading(false)); // Gérer le cas où le chargement est terminé dans finally
-	}, []);
+			.finally(() => setIsLoading(false));
+	}
+
+	function handleCheckboxChange(event) {
+		const genreId = event.target.value;
+		if (selectedGenre === genreId) {
+			setSelectedGenre(null); // Deselect the checkbox if it's already selected
+		} else {
+			setSelectedGenre(String(genreId));
+		}
+	}
 
 	return (
 		<>
 			<div className="pageContainer">
 				<div className="pageContent">
+					{genres.map(genre => (
+						<div key={genre.id}>
+							<label>
+								<input
+									type="checkbox"
+									value={genre.id}
+									checked={Number(selectedGenre) === genre.id}
+									onChange={handleCheckboxChange}
+								/>
+								{genre.name}
+							</label>
+						</div>
+					))}
 					<div className={isLoading ? 'showList is-loading' : 'showList'}>
-						{movies.map(movie => (
+						{displayedMovies.map(movie => (
 							<MovieTag movie={movie} key={movie.id} />
 						))}
 					</div>
