@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function AuthPage() {
@@ -9,9 +9,54 @@ function AuthPage() {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [message, setMessage] = useState('');
+	const [passwordStrength, setPasswordStrength] = useState({
+		minLength: false,
+		uppercase: false,
+		lowercase: false,
+		number: false,
+		specialChar: false,
+	});
+	const [isError, setIsError] = useState(false);
+
+	useEffect(() => {
+		setPasswordStrength({
+			minLength: password.length >= 8,
+			uppercase: /[A-Z]/.test(password),
+			lowercase: /[a-z]/.test(password),
+			number: /[0-9]/.test(password),
+			specialChar: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password),
+		});
+	}, [password]);
 
 	const handleSubmit = event => {
 		event.preventDefault();
+		setIsError(false);
+		if (!isLogin) {
+			if (
+				!passwordStrength.minLength ||
+				!passwordStrength.uppercase ||
+				!passwordStrength.lowercase ||
+				!passwordStrength.number ||
+				!passwordStrength.specialChar
+			) {
+				setMessage('Password does not meet all requirements');
+				setIsError(true);
+				return;
+			}
+
+			if (password !== confirmPassword) {
+				setMessage('Passwords do not match');
+				setIsError(true);
+				return;
+			}
+
+			if (!username || !password || !firstName || !lastName) {
+				setMessage('All fields must be filled out');
+				setIsError(true);
+				return;
+			}
+		}
+
 		const url = isLogin
 			? 'http://localhost:8080/login'
 			: 'http://localhost:8080/user/register';
@@ -43,10 +88,15 @@ function AuthPage() {
 					setFirstName('');
 					setIsLogin(true);
 					setMessage('Registration successful !');
+					setIsError(false);
 				}
 			})
 			.catch(error => {
 				console.error('Error:', error.response.data);
+				if (!isLogin) {
+					setMessage('An account with this email already exist');
+					setIsError(true);
+				}
 				// Gérer l'affichage des messages d'erreur
 			});
 	};
@@ -57,7 +107,9 @@ function AuthPage() {
 
 	return (
 		<div className="auth-page">
-			{message && <div className="message">{message}</div>}
+			{message && (
+				<div className={isError ? 'message error' : 'message'}>{message}</div>
+			)}
 			<div className="button-login">
 				<button
 					className={getButtonClass(true)}
@@ -91,6 +143,25 @@ function AuthPage() {
 						onChange={e => setPassword(e.target.value)}
 					/>
 				</label>
+				{!isLogin && (
+					<div className="check-condition">
+						<div className={passwordStrength.minLength ? 'valid' : 'invalid'}>
+							Minimum 8 characters
+						</div>
+						<div className={passwordStrength.uppercase ? 'valid' : 'invalid'}>
+							Contains uppercase letter
+						</div>
+						<div className={passwordStrength.lowercase ? 'valid' : 'invalid'}>
+							Contains lowercase letter
+						</div>
+						<div className={passwordStrength.number ? 'valid' : 'invalid'}>
+							Contains number
+						</div>
+						<div className={passwordStrength.specialChar ? 'valid' : 'invalid'}>
+							Contains special character
+						</div>
+					</div>
+				)}
 				{!isLogin && (
 					<>
 						<label className="auth-label">

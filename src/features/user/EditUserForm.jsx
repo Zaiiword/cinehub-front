@@ -28,7 +28,7 @@ function EditUserForm() {
 				email,
 				newPassword,
 			});
-			setIsEditing(false);
+			// setIsEditing(false);
 		} catch (error) {
 			console.error('Error:', error.response.data);
 		}

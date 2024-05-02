@@ -101,3 +101,18 @@
     margin: 10px 0;
     width: fit-content;
 }
+
+.valid {
+    color: green;
+  }
+
+.invalid {
+    color: red;
+ }
+
+ .check-condition{
+    margin-bottom: 10px;
+ }
+ .error {
+    background-color: red;
+  }
