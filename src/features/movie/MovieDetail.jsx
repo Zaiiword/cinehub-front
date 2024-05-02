@@ -84,7 +84,7 @@ export default function MovieDetail() {
 	};
 
 	const isMovieInWatchlist = user?.watchlist.some(
-		watchlistMovie => watchlistMovie.id === movie.id
+		watchlistMovie => watchlistMovie?.id === movie?.id
 	);
 
 	return (

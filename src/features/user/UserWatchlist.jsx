@@ -41,18 +41,21 @@ export function UserWatchlist() {
 	return (
 		<>
 			<div className="pageContainer home">
-				<div className="pageTitle">
-					<h2></h2>
-				</div>
 				<div className="pageContent">
 					<section className={isLoading ? 'showList is-loading' : 'showList'}>
 						{console.log(user)}
-						{user?.watchlist.map(movie => (
+						{user?.watchlist.length === 0 ? (
 							<div>
-								<MovieTag movie={movie} key={movie.id} />
-								<button onClick={() => removeMovie(movie.id)}>Remove</button>
+								<h1>No movies in watchlist</h1>
 							</div>
-						))}
+						) : (
+							user?.watchlist.map(movie => (
+								<div key={movie.id}>
+									<MovieTag movie={movie} />
+									<button onClick={() => removeMovie(movie.id)}>Remove</button>
+								</div>
+							))
+						)}
 					</section>
 				</div>
 			</div>
