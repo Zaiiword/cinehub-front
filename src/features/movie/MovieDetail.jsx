@@ -60,15 +60,11 @@ export default function MovieDetail() {
 	};
 
 	const handleLike = async reviewId => {
-		await axios.patch(
-			`http://localhost:8080/movie/${movie.id}/review/${reviewId}`,
-			user,
-			{
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		await axios.patch(`http://localhost:8080/movie/review/${reviewId}`, user, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 
 		fetchMovie();
 	};
