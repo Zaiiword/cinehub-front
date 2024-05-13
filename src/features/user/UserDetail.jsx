@@ -9,6 +9,7 @@ function UserDetail() {
 		axios
 			.get('http://localhost:8080/user/me')
 			.then(response => {
+				console.log(response.data);
 				setUser(response.data);
 			})
 			.catch(error => {
@@ -21,34 +22,50 @@ function UserDetail() {
 	}
 
 	return (
-		<>
+		<div className="user-container">
 			<div className="user-detail">
-				<h2>{user.name}</h2>
-				<p>{user.firstName}</p>
-				<p>{user.mail}</p>
-				<p>{user.language}</p>
-				<p>{user.role}</p>
-				<img src={user.profilePicture} alt="Profile" />
+				<img src={user?.profilePicture} alt="Profile Picture" />
+				<div className="user-info">
+					<h2>
+						{user.firstName} {user.name}
+					</h2>
+					<p className="infoDetail">
+						<span className="category">E-MAIL :</span>
+						<span>{user.mail}</span>
+					</p>
+					<p className="infoDetail">
+						<span className="category">NATIONALITY :</span>
+						<span>{user.language}</span>
+					</p>
+					{user.role === 'admin' && (
+						<p className="infoDetail">
+							<span className="category">ROLE :</span>
+							<span>{user.role}</span>
+						</p>
+					)}
+				</div>
 			</div>
 			<EditUserForm />
-			<button
-				onClick={() => {
-					window.location.href = `/user/${user.id}/watchlist`;
-				}}
-			>
-				Watchlist
-			</button>
-
-			{user.role === 'admin' && (
+			<div className="userButtons">
 				<button
 					onClick={() => {
-						window.location.href = `/admin/dashboard`;
+						window.location.href = `/user/${user.id}/watchlist`;
 					}}
 				>
-					Admin Dashboard
+					<i className="fa-regular fa-clock"></i>
 				</button>
-			)}
-		</>
+
+				{user.role === 'admin' && (
+					<button
+						onClick={() => {
+							window.location.href = `/admin/dashboard`;
+						}}
+					>
+						<i className="fa-solid fa-shield"></i>{' '}
+					</button>
+				)}
+			</div>
+		</div>
 	);
 }
 

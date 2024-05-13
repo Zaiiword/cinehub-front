@@ -36,7 +36,7 @@ function EditUserForm() {
 
 	return (
 		<div className="edit-user-form">
-			<button onClick={() => setIsEditing(!isEditing)}>
+			<button className="edit-button" onClick={() => setIsEditing(!isEditing)}>
 				{isEditing ? 'Cancel' : 'Edit'}
 			</button>
 

@@ -9,6 +9,10 @@ export default function MovieList() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedGenre, setSelectedGenre] = useState(null);
 	const [showFilter, setShowFilter] = useState(false);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const moviesPerPage = 9;
+	const [totalPages, setTotalPages] = useState(0);
 
 	useEffect(() => {
 		fetchGenres();
@@ -16,15 +20,44 @@ export default function MovieList() {
 	}, []);
 
 	useEffect(() => {
+		setIsLoading(true);
 		if (selectedGenre) {
 			const filteredMovies = allMovies.filter(movie =>
 				movie.genres.some(genre => genre.id === Number(selectedGenre))
 			);
-			setDisplayedMovies(filteredMovies);
+			setDisplayedMovies(filteredMovies.slice(0, moviesPerPage));
+			setTotalPages(Math.ceil(filteredMovies.length / moviesPerPage));
+			setCurrentPage(1);
 		} else {
-			setDisplayedMovies(allMovies);
+			setDisplayedMovies(allMovies.slice(0, moviesPerPage));
+			setTotalPages(Math.ceil(allMovies.length / moviesPerPage));
+			setCurrentPage(1);
 		}
+		setIsLoading(false);
 	}, [selectedGenre, allMovies]);
+
+	useEffect(() => {
+		setIsLoading(true);
+		const indexOfLastMovie = currentPage * moviesPerPage;
+		const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+		if (selectedGenre) {
+			const currentMovies = allMovies
+				.filter(movie =>
+					movie.genres.some(genre => genre.id === Number(selectedGenre))
+				)
+				.slice(indexOfFirstMovie, indexOfLastMovie);
+			setDisplayedMovies(currentMovies);
+			setIsLoading(false);
+			return;
+		} else {
+			const currentMovies = allMovies.slice(
+				indexOfFirstMovie,
+				indexOfLastMovie
+			);
+			setDisplayedMovies(currentMovies);
+			setIsLoading(false);
+		}
+	}, [currentPage]);
 
 	function fetchGenres() {
 		axios.get('http://localhost:8080/movie/genres').then(response => {
@@ -35,10 +68,9 @@ export default function MovieList() {
 	function fetchAllMovies() {
 		setIsLoading(true);
 		axios
-			.get('http://localhost:8080/movie/summary?limit=8')
+			.get('http://localhost:8080/movie')
 			.then(response => {
 				setAllMovies(response.data);
-				setDisplayedMovies(response.data);
 			})
 			.catch(error => console.error('Error:', error))
 			.finally(() => setIsLoading(false));
@@ -51,6 +83,11 @@ export default function MovieList() {
 		} else {
 			setSelectedGenre(String(genreId));
 		}
+	}
+
+	const pageNumbers = [];
+	for (let i = 1; i <= totalPages; i++) {
+		pageNumbers.push(i);
 	}
 
 	return (
@@ -99,7 +136,14 @@ export default function MovieList() {
 
 					<div className={isLoading ? 'showList is-loading' : 'showList'}>
 						{displayedMovies.map(movie => (
-							<MovieTag movie={movie} key={movie.id} />
+							<MovieTag className="movie-tag" movie={movie} key={movie.id} />
+						))}
+					</div>
+					<div className="page-number">
+						{pageNumbers.map(number => (
+							<button key={number} onClick={() => setCurrentPage(number)}>
+								{number}
+							</button>
 						))}
 					</div>
 				</div>

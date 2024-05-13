@@ -21,14 +21,16 @@ export default function AdminDashboard() {
 	}, []);
 
 	function deleteUser(id) {
-		axios
-			.delete(`http://localhost:8080/user/${id}`)
-			.then(() => {
-				setUsers(users.filter(user => user.id !== id));
-			})
-			.catch(error => {
-				console.error(error);
-			});
+		if (window.confirm('Are you sure you want to delete this user?')) {
+			axios
+				.delete(`http://localhost:8080/user/${id}`)
+				.then(() => {
+					setUsers(users.filter(user => user.id !== id));
+				})
+				.catch(error => {
+					console.error(error);
+				});
+		}
 	}
 
 	return (
@@ -42,14 +44,13 @@ export default function AdminDashboard() {
 						<p>
 							{user.firstName} {user.name}
 						</p>
-						{user.role === 'admin' && (
-							<button
-								className="deleteButton"
-								onClick={() => deleteUser(user.id)}
-							>
-								Delete
-							</button>
-						)}
+
+						<button
+							className="deleteButton"
+							onClick={() => deleteUser(user.id)}
+						>
+							Delete
+						</button>
 					</div>
 				))}
 			</div>
