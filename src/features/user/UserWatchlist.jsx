@@ -50,8 +50,8 @@ export function UserWatchlist() {
 							</div>
 						) : (
 							user?.watchlist.map(movie => (
-								<div key={movie.id}>
-									<MovieTag movie={movie} />
+								<div className="watchlist-item" key={movie.id}>
+									<MovieTag className="user-watchlist-movietag" movie={movie} />
 									<button onClick={() => removeMovie(movie.id)}>Remove</button>
 								</div>
 							))

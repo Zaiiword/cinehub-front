@@ -178,7 +178,7 @@ button {
   .movie { width: 50%; }
 }
 @media (min-width: 1001px) {
-  .movie { width: 25%; }
+  .movie { width: 350px; }
 }
 
 

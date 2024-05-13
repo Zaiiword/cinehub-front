@@ -38,7 +38,7 @@ export default function MovieDetail() {
 	function handleCommentSubmit() {
 		event.preventDefault();
 		const review = {
-			userId: '1', //TODO find from the token the user id in the back
+			userId: user.id, //TODO find from the token the user id in the back
 			rating: rating,
 			comment: commentRef.current.value,
 		};

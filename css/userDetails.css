@@ -103,3 +103,9 @@
 .edit-user-submit:hover {
     background-color: #218838;
 }
+
+.watchlist-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
