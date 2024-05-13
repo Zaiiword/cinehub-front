@@ -79,6 +79,12 @@ export default function MovieDetail() {
 		fetchUser();
 	};
 
+	function deleteReview(id) {
+		axios.delete(`http://localhost:8080/movie/review/${id}`).then(() => {
+			fetchMovie();
+		});
+	}
+
 	const isMovieInWatchlist = user?.watchlist.some(
 		watchlistMovie => watchlistMovie?.id === movie?.id
 	);
@@ -221,6 +227,12 @@ export default function MovieDetail() {
 															: 'fa-regular fa-heart'
 													}
 												></i>
+											</button>
+											<button
+												className="deleteButton"
+												onClick={() => deleteReview(review.id)}
+											>
+												Delete
 											</button>
 										</div>
 									</div>

@@ -38,6 +38,16 @@ function UserDetail() {
 			>
 				Watchlist
 			</button>
+
+			{user.role === 'admin' && (
+				<button
+					onClick={() => {
+						window.location.href = `/admin/dashboard`;
+					}}
+				>
+					Admin Dashboard
+				</button>
+			)}
 		</>
 	);
 }
