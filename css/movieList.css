@@ -51,6 +51,14 @@ button {
   padding: 5px; 
 }
 
+.recommended-movies-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 5px;
+
+}
+
 .movie {
   margin: 10px;
   text-align: center; 
