@@ -7,7 +7,9 @@ export default function RecommendedMovies({ userId }) {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:8080/movie/recommendations/${userId}`)
+			.get(
+				`http://cinehub-back.us-east-1.elasticbeanstalk.com/movie/recommendations/${userId}`
+			)
 			.then(response => {
 				setRecommendedMovies(response.data);
 			})
