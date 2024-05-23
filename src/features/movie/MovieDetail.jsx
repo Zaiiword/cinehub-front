@@ -13,6 +13,12 @@ export default function MovieDetail() {
 	const [comment, setComment] = useState('');
 	const [user, setUser] = useState(null);
 
+	useEffect(() => {
+		setIsLoading(true);
+		fetchMovie();
+		fetchUser();
+	}, []);
+
 	function fetchMovie() {
 		axios
 			.get(
@@ -23,12 +29,6 @@ export default function MovieDetail() {
 			})
 			.then(() => setIsLoading(false));
 	}
-
-	useEffect(() => {
-		setIsLoading(true);
-		fetchMovie();
-		fetchUser();
-	}, []);
 
 	function fetchUser() {
 		//get the user
@@ -42,7 +42,7 @@ export default function MovieDetail() {
 	function handleCommentSubmit() {
 		event.preventDefault();
 		const review = {
-			userId: user.id, //TODO find from the token the user id in the back
+			userId: user.id,
 			rating: rating,
 			comment: commentRef.current.value,
 		};
@@ -247,12 +247,14 @@ export default function MovieDetail() {
 													}
 												></i>
 											</button>
-											<button
-												className="deleteButton"
-												onClick={() => deleteReview(review.id)}
-											>
-												Delete
-											</button>
+											{user?.role === 'admin' && (
+												<button
+													className="deleteButton"
+													onClick={() => deleteReview(review.id)}
+												>
+													Delete
+												</button>
+											)}
 										</div>
 									</div>
 								);

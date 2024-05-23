@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import MovieTag from './MovieTag';
 import axios from 'axios';
+import RecommendedMovies from './RecommendedMovies';
 
 export default function MovieList() {
 	const [genres, setGenres] = useState([]);
@@ -10,13 +11,49 @@ export default function MovieList() {
 	const [selectedGenre, setSelectedGenre] = useState(null);
 	const [showFilter, setShowFilter] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [user, setUser] = useState(null);
 
 	const moviesPerPage = 9;
 	const [totalPages, setTotalPages] = useState(0);
 
 	useEffect(() => {
-		fetchGenres();
-		fetchAllMovies();
+		setIsLoading(true);
+		const fetchUser = async () => {
+			try {
+				const response = await axios.get('http://localhost:8080/user/me');
+				setUser(response.data);
+				console.log(response.data);
+			} catch (error) {
+				console.error('Error:', error);
+			}
+		};
+
+		const fetchAllMovies = async () => {
+			try {
+				const response = await axios.get('http://localhost:8080/movie');
+				setAllMovies(response.data);
+			} catch (error) {
+				console.error('Error:', error);
+			}
+		};
+
+		const fetchGenres = async () => {
+			try {
+				const response = await axios.get('http://localhost:8080/movie/genres');
+				setGenres(response.data);
+			} catch (error) {
+				console.error('Error:', error);
+			}
+		};
+
+		const fetchData = async () => {
+			await fetchUser();
+			await fetchAllMovies();
+			await fetchGenres();
+			setIsLoading(false);
+		};
+
+		fetchData();
 	}, []);
 
 	useEffect(() => {
@@ -148,6 +185,7 @@ export default function MovieList() {
 							</button>
 						))}
 					</div>
+					<div>{user && <RecommendedMovies userId={user.id} />}</div>
 				</div>
 			</div>
 		</>
