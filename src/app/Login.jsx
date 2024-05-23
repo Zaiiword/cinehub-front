@@ -58,8 +58,8 @@ function AuthPage() {
 		}
 
 		const url = isLogin
-			? 'http://localhost:8080/login'
-			: 'http://localhost:8080/user/register';
+			? 'http://cinehub-back.us-east-1.elasticbeanstalk.com/login'
+			: 'http://cinehub-back.us-east-1.elasticbeanstalk.com/user/register';
 		const userData = isLogin
 			? { username, password }
 			: {

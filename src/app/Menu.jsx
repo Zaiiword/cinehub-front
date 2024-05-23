@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../images/icon.png';
 
 export default function Menu() {
 	const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function Menu() {
 		<div className="header">
 			<Link to="/">
 				<div className="right-header">
-					<img src="/images/icon.png" className="logo" alt="Logo du site" />
+					<img src={logo} className="logo" alt="Logo du site" />
 					<h1>CineHub</h1>
 				</div>
 			</Link>

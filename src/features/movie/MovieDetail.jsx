@@ -15,7 +15,9 @@ export default function MovieDetail() {
 
 	function fetchMovie() {
 		axios
-			.get(`http://localhost:8080/movie/${movieId}`)
+			.get(
+				`http://cinehub-back.us-east-1.elasticbeanstalk.com/movie/${movieId}`
+			)
 			.then(data => {
 				setMovie(data.data);
 			})
@@ -30,9 +32,11 @@ export default function MovieDetail() {
 
 	function fetchUser() {
 		//get the user
-		axios.get('http://localhost:8080/user/me').then(response => {
-			setUser(response.data);
-		});
+		axios
+			.get('http://cinehub-back.us-east-1.elasticbeanstalk.com/user/me')
+			.then(response => {
+				setUser(response.data);
+			});
 	}
 
 	function handleCommentSubmit() {
@@ -43,11 +47,15 @@ export default function MovieDetail() {
 			comment: commentRef.current.value,
 		};
 		axios
-			.post(`http://localhost:8080/movie/${movieId}/review`, review, {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			})
+			.post(
+				`http://cinehub-back.us-east-1.elasticbeanstalk.com/movie/${movieId}/review`,
+				review,
+				{
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				}
+			)
 			.then(() => {
 				commentRef.current.value = '';
 				setRating(0);
@@ -60,29 +68,40 @@ export default function MovieDetail() {
 	};
 
 	const handleLike = async reviewId => {
-		await axios.patch(`http://localhost:8080/movie/review/${reviewId}`, user, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		await axios.patch(
+			`http://cinehub-back.us-east-1.elasticbeanstalk.com/movie/review/${reviewId}`,
+			user,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
 		fetchMovie();
 	};
 
 	const handleWatchList = async () => {
-		await axios.post(`http://localhost:8080/user/watchlist/${movieId}`, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		await axios.post(
+			`http://cinehub-back.us-east-1.elasticbeanstalk.com/user/watchlist/${movieId}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
 		fetchUser();
 	};
 
 	function deleteReview(id) {
-		axios.delete(`http://localhost:8080/movie/review/${id}`).then(() => {
-			fetchMovie();
-		});
+		axios
+			.delete(
+				`http://cinehub-back.us-east-1.elasticbeanstalk.com/movie/review/${id}`
+			)
+			.then(() => {
+				fetchMovie();
+			});
 	}
 
 	const isMovieInWatchlist = user?.watchlist.some(

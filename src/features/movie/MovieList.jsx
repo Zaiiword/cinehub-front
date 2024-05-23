@@ -60,15 +60,17 @@ export default function MovieList() {
 	}, [currentPage]);
 
 	function fetchGenres() {
-		axios.get('http://localhost:8080/movie/genres').then(response => {
-			setGenres(response.data);
-		});
+		axios
+			.get('http://cinehub-back.us-east-1.elasticbeanstalk.com/movie/genres')
+			.then(response => {
+				setGenres(response.data);
+			});
 	}
 
 	function fetchAllMovies() {
 		setIsLoading(true);
 		axios
-			.get('http://localhost:8080/movie')
+			.get('http://cinehub-back.us-east-1.elasticbeanstalk.com/movie')
 			.then(response => {
 				setAllMovies(response.data);
 			})
