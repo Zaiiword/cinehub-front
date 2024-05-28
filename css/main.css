@@ -5,6 +5,9 @@
     --dark-blue: #001C40;
 }
 
+/* body{
+	width: 100vh;
+} */
 
 a:visited {
     color: inherit;
