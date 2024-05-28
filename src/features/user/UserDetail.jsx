@@ -1,10 +1,31 @@
+/**
+ * @file
+ * This file contains the UserDetail component which is responsible for rendering a user's details.
+ */
+
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import EditUserForm from './EditUserForm';
 
+/**
+ * UserDetail component.
+ * This component is responsible for rendering a user's details.
+ * It fetches the user's details from the server and displays them.
+ * It also provides buttons to navigate to the user's watchlist and the admin dashboard (if the user is an admin).
+ *
+ * @function
+ * @returns {JSX.Element} The rendered component.
+ */
 function UserDetail() {
+	/**
+	 * State and setter for user.
+	 * @type {[Object, Function]}
+	 */
 	const [user, setUser] = useState(null);
 
+	/**
+	 * Fetches the user's details when the component mounts.
+	 */
 	useEffect(() => {
 		axios
 			.get('http://localhost:8080/user/me')

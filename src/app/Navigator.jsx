@@ -1,3 +1,8 @@
+/**
+ * @file
+ * This file contains the Navigator component which is responsible for routing in the application.
+ */
+
 import { Routes, Route } from 'react-router-dom';
 import MovieList from '../features/movie/MovieList';
 import Search from './Search';
@@ -10,6 +15,14 @@ import PrivateRoute from '../features/PrivateRoute';
 import { UserWatchlist } from '../features/user/UserWatchlist';
 import AdminDashboard from '../features/user/AdminDashboard';
 
+/**
+ * Navigator component.
+ * This component is responsible for routing in the application.
+ * It includes routes to the movie list, search, movie detail, user detail, login, logout, user watchlist, and admin dashboard pages.
+ *
+ * @function
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function Navigator() {
 	return (
 		<Routes>

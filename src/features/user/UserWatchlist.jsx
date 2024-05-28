@@ -1,14 +1,40 @@
+/**
+ * @file
+ * This file contains the UserWatchlist component which is responsible for rendering a user's watchlist.
+ */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import MovieTag from '../movie/MovieTag';
 import { useParams } from 'react-router-dom';
 
+/**
+ * UserWatchlist component.
+ * This component fetches and displays the movies in the user's watchlist.
+ * It also provides functionality to remove a movie from the watchlist.
+ *
+ * @returns {JSX.Element} The rendered UserWatchlist component.
+ */
 export function UserWatchlist() {
+	/**
+	 * The public user ID retrieved from the URL parameters.
+	 * @type {string}
+	 */
 	const publicUserId = useParams().id;
 
+	/**
+	 * State and setter for the user data.
+	 * @type {[Object, Function]}
+	 */
 	const [user, setUser] = useState(null);
+	/**
+	 * State and setter for the loading state.
+	 * @type {[boolean, Function]}
+	 */
 	const [isLoading, setIsLoading] = useState(false);
 
+	/**
+	 * Fetch the user's data when the component mounts.
+	 */
 	useEffect(() => {
 		setIsLoading(true);
 		axios
@@ -22,13 +48,20 @@ export function UserWatchlist() {
 			.catch(err => console.log(err));
 	}, []);
 
+	/**
+	 * Fetch the user's data from the server.
+	 */
 	function fetchUser() {
-		//get the user
 		axios.get('http://localhost:8080/user/me').then(response => {
 			setUser(response.data);
 		});
 	}
 
+	/**
+	 * Remove a movie from the user's watchlist.
+	 *
+	 * @param {string} movieId - The ID of the movie to remove.
+	 */
 	function removeMovie(movieId) {
 		axios
 			.delete(`http://localhost:8080/user/watchlist/${movieId}`)

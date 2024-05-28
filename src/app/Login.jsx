@@ -1,6 +1,19 @@
+/**
+ * @file
+ * This file contains the AuthPage component which is responsible for rendering the login and registration forms.
+ */
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+/**
+ * AuthPage component.
+ * This component is responsible for rendering the login and registration forms.
+ * It manages the state of the form fields and validates the password.
+ *
+ * @function
+ * @returns {JSX.Element} The rendered component.
+ */
 function AuthPage() {
 	const [isLogin, setIsLogin] = useState(true);
 	const [username, setUsername] = useState('');
@@ -18,6 +31,10 @@ function AuthPage() {
 	});
 	const [isError, setIsError] = useState(false);
 
+	/**
+	 * This effect validates the password whenever it changes.
+	 * It checks for minimum length, presence of uppercase and lowercase letters, numbers, and special characters.
+	 */
 	useEffect(() => {
 		setPasswordStrength({
 			minLength: password.length >= 8,
@@ -28,6 +45,10 @@ function AuthPage() {
 		});
 	}, [password]);
 
+	/**
+	 * This effect validates the password whenever it changes.
+	 * It checks for minimum length, presence of uppercase and lowercase letters, numbers, and special characters.
+	 */
 	const handleSubmit = event => {
 		event.preventDefault();
 		setIsError(false);
@@ -58,8 +79,8 @@ function AuthPage() {
 		}
 
 		const url = isLogin
-			? 'http://localhost:8080/login'
-			: 'http://localhost:8080/user/register';
+			? 'http://cinehub-back.us-east-1.elasticbeanstalk.com/login'
+			: 'http://cinehub-back.us-east-1.elasticbeanstalk.com/user/register';
 		const userData = isLogin
 			? { username, password }
 			: {
@@ -79,10 +100,10 @@ function AuthPage() {
 				console.log(response.data.token);
 				sessionStorage.setItem('isAuthenticated', 'true');
 				if (isLogin) {
-					// Rediriger vers le tableau de bord
+					// redirect to dashboard
 					window.location.href = '/';
 				} else {
-					// Effacer le formulaire et passer en mode connexion
+					// Remove the form and switch to login mode
 					setUsername('');
 					setPassword('');
 					setFirstName('');
@@ -97,7 +118,7 @@ function AuthPage() {
 					setMessage('An account with this email already exist');
 					setIsError(true);
 				}
-				// Gérer l'affichage des messages d'erreur
+				// handle error display
 			});
 	};
 

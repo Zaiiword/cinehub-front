@@ -1,6 +1,20 @@
+/**
+ * @file
+ * This file contains the Menu component which is responsible for rendering the navigation menu.
+ */
+
 import { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../images/icon.png';
 
+/**
+ * Menu component.
+ * This component is responsible for rendering the navigation menu.
+ * It includes links to the home page, the search page, and the user profile page.
+ *
+ * @function
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function Menu() {
 	const navigate = useNavigate();
 	const search = useRef(null);
@@ -13,7 +27,7 @@ export default function Menu() {
 		<div className="header">
 			<Link to="/">
 				<div className="right-header">
-					<img src="/images/icon.png" className="logo" alt="Logo du site" />
+					<img src={logo} className="logo" alt="Logo du site" />
 					<h1>CineHub</h1>
 				</div>
 			</Link>

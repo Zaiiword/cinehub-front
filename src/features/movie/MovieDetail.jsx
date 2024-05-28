@@ -4,21 +4,55 @@ import axios from 'axios';
 import ReactStars from 'react-rating-stars-component';
 
 export default function MovieDetail() {
+	/**
+	 * The ID of the movie, obtained from the URL parameters.
+	 * @type {string}
+	 */
 	const movieId = useParams().id;
+	/**
+	 * A reference to the comment input field.
+	 * @type {React.RefObject}
+	 */
 	const commentRef = useRef();
 
+	/**
+	 * The movie data fetched from the server.
+	 * @type {Object}
+	 */
 	const [movie, setMovie] = useState();
+	/**
+	 * A boolean indicating whether the movie data is being loaded.
+	 * @type {boolean}
+	 */
 	const [isLoading, setIsLoading] = useState(false);
+	/**
+	 * The rating given by the user.
+	 * @type {number}
+	 */
 	const [rating, setRating] = useState(0);
+	/**
+	 * The comment written by the user.
+	 * @type {string}
+	 */
 	const [comment, setComment] = useState('');
+	/**
+	 * The user data fetched from the server.
+	 * @type {Object}
+	 */
 	const [user, setUser] = useState(null);
 
+	/**
+	 * Fetches the movie and user data when the component mounts.
+	 */
 	useEffect(() => {
 		setIsLoading(true);
 		fetchMovie();
 		fetchUser();
 	}, []);
 
+	/**
+	 * Fetches the movie data from the server.
+	 */
 	function fetchMovie() {
 		axios
 			.get(`http://localhost:8080/movie/${movieId}`)
@@ -28,12 +62,18 @@ export default function MovieDetail() {
 			.then(() => setIsLoading(false));
 	}
 
+	/**
+	 * Fetches the user data from the server.
+	 */
 	function fetchUser() {
 		axios.get('http://localhost:8080/user/me').then(response => {
 			setUser(response.data);
 		});
 	}
 
+	/**
+	 * Handles the submission of a comment by sending the informations to the server.
+	 */
 	function handleCommentSubmit() {
 		event.preventDefault();
 		const review = {
@@ -54,10 +94,18 @@ export default function MovieDetail() {
 			}); //to update the page with the new comment
 	}
 
+	/**
+	 * Updates the rating given by the user.
+	 * @param {number} newRating - The new rating given by the user.
+	 */
 	const changeRating = newRating => {
 		setRating(newRating);
 	};
 
+	/**
+	 * Handles the liking of a review by sending to the server user informations.
+	 * @param {string} reviewId - The ID of the review to like.
+	 */
 	const handleLike = async reviewId => {
 		await axios.patch(`http://localhost:8080/movie/review/${reviewId}`, user, {
 			headers: {
@@ -68,6 +116,9 @@ export default function MovieDetail() {
 		fetchMovie();
 	};
 
+	/**
+	 * Handles the addition of the movie to the user's watchlist by sending the informations to the server.
+	 */
 	const handleWatchList = async () => {
 		await axios.post(`http://localhost:8080/user/watchlist/${movieId}`, {
 			headers: {
@@ -78,6 +129,10 @@ export default function MovieDetail() {
 		fetchUser();
 	};
 
+	/**
+	 * Send a request to the server to delete the review.
+	 * @param {string} id - The ID of the review to delete.
+	 */
 	function deleteReview(id) {
 		axios.delete(`http://localhost:8080/movie/review/${id}`).then(() => {
 			fetchMovie();

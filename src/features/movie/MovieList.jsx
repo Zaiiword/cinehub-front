@@ -1,23 +1,82 @@
+/**
+ * @file
+ * This file contains the MovieList component which is responsible for rendering a list of movies.
+ */
+
 import { useState, useEffect } from 'react';
 import MovieTag from './MovieTag';
 import axios from 'axios';
 import RecommendedMovies from './RecommendedMovies';
 
+/**
+ * MovieList component.
+ * This component is responsible for rendering a list of movies.
+ * It fetches the movies and user data from the server and displays them.
+ *
+ * @function
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function MovieList() {
+	/**
+	 * State and setter for genres presents in the database.
+	 * @type {[Array, Function]}
+	 */
 	const [genres, setGenres] = useState([]);
+	/**
+	 * State and setter for all movies.
+	 * @type {[Array, Function]}
+	 */
 	const [allMovies, setAllMovies] = useState([]);
+	/**
+	 * State and setter for the movies displayed on the page.
+	 * @type {[Array, Function]}
+	 */
 	const [displayedMovies, setDisplayedMovies] = useState([]);
+	/**
+	 * State and setter for isLoading.
+	 * @type {[boolean, Function]}
+	 */
 	const [isLoading, setIsLoading] = useState(false);
+	/**
+	 * State and setter for the selected genre by the user.
+	 * @type {[null, Function]}
+	 */
 	const [selectedGenre, setSelectedGenre] = useState(null);
+	/**
+	 * State and setter for showFilter.
+	 * @type {[boolean, Function]}
+	 */
 	const [showFilter, setShowFilter] = useState(false);
+	/**
+	 * The current page number for the movie list.
+	 * @type {number}
+	 */
 	const [currentPage, setCurrentPage] = useState(1);
+	/**
+	 * The user data fetched from the server.
+	 * @type {Object}
+	 */
 	const [user, setUser] = useState(null);
 
+	/**
+	 * The number of movies to display per page.
+	 * @type {number}
+	 */
 	const moviesPerPage = 9;
+	/**
+	 * The total number of pages in the movie list.
+	 * @type {number}
+	 */
 	const [totalPages, setTotalPages] = useState(0);
 
+	/**
+	 * Fetches the user data and all movies when the component mounts.
+	 */
 	useEffect(() => {
 		setIsLoading(true);
+		/**
+		 * Fetches the user data from the server.
+		 */
 		const fetchUser = async () => {
 			try {
 				const response = await axios.get('http://localhost:8080/user/me');
@@ -27,7 +86,9 @@ export default function MovieList() {
 				console.error('Error:', error);
 			}
 		};
-
+		/**
+		 * Fetches all movies from the server.
+		 */
 		const fetchAllMovies = async () => {
 			try {
 				const response = await axios.get('http://localhost:8080/movie');
@@ -36,7 +97,9 @@ export default function MovieList() {
 				console.error('Error:', error);
 			}
 		};
-
+		/**
+		 * Fetches all genres from the server.
+		 */
 		const fetchGenres = async () => {
 			try {
 				const response = await axios.get('http://localhost:8080/movie/genres');
@@ -46,6 +109,10 @@ export default function MovieList() {
 			}
 		};
 
+		/**
+		 * Fetches user data, all movies, and all genres from the server.
+		 * After fetching, it sets the loading state to false.
+		 */
 		const fetchData = async () => {
 			await fetchUser();
 			await fetchAllMovies();
@@ -56,6 +123,12 @@ export default function MovieList() {
 		fetchData();
 	}, []);
 
+	/**
+	 * This effect is responsible for setting the displayed movies based on the selected genre.
+	 * If a genre is selected, it filters the movies by that genre and sets the displayed movies.
+	 * If no genre is selected, it sets the displayed movies to the first page of all movies.
+	 * It also sets the total pages and current page accordingly.
+	 */
 	useEffect(() => {
 		setIsLoading(true);
 		if (selectedGenre) {
@@ -73,6 +146,12 @@ export default function MovieList() {
 		setIsLoading(false);
 	}, [selectedGenre, allMovies]);
 
+	/**
+	 * This effect is responsible for setting the displayed movies based on the current page.
+	 * It calculates the index of the first and last movie of the current page and slices the movies array accordingly.
+	 * If a genre is selected, it filters the movies by that genre before slicing.
+	 * It then sets the displayed movies and stops the loading state.
+	 */
 	useEffect(() => {
 		setIsLoading(true);
 		const indexOfLastMovie = currentPage * moviesPerPage;
@@ -96,6 +175,12 @@ export default function MovieList() {
 		}
 	}, [currentPage]);
 
+	/**
+	 * This function handles the change event of the genre checkboxes.
+	 * It sets the selected genre to the value of the checkbox that triggered the event.
+	 *
+	 * @param {Event} event - The change event.
+	 */
 	function handleCheckboxChange(event) {
 		const genreId = event.target.value;
 		if (selectedGenre === genreId) {
