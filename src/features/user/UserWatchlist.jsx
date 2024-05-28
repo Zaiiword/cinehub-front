@@ -23,12 +23,12 @@ export function UserWatchlist() {
 
 	/**
 	 * State and setter for the user data.
-	 * @type {[Object, Function]}
+	 * @type {Object}
 	 */
 	const [user, setUser] = useState(null);
 	/**
 	 * State and setter for the loading state.
-	 * @type {[boolean, Function]}
+	 * @type {boolean}
 	 */
 	const [isLoading, setIsLoading] = useState(false);
 

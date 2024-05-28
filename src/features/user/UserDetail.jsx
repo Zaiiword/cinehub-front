@@ -19,7 +19,7 @@ import EditUserForm from './EditUserForm';
 function UserDetail() {
 	/**
 	 * State and setter for user.
-	 * @type {[Object, Function]}
+	 * @type {Object}
 	 */
 	const [user, setUser] = useState(null);
 

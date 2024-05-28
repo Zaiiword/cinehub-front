@@ -19,7 +19,7 @@ import MovieTag from './MovieTag';
 export default function RecommendedMovies({ userId }) {
 	/**
 	 * State and setter for recommended movies.
-	 * @type {[Array, Function]}
+	 * @type {Array}
 	 */
 	const [recommendedMovies, setRecommendedMovies] = useState([]);
 

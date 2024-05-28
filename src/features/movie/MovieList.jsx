@@ -19,32 +19,32 @@ import RecommendedMovies from './RecommendedMovies';
 export default function MovieList() {
 	/**
 	 * State and setter for genres presents in the database.
-	 * @type {[Array, Function]}
+	 * @type {Array}
 	 */
 	const [genres, setGenres] = useState([]);
 	/**
 	 * State and setter for all movies.
-	 * @type {[Array, Function]}
+	 * @type {Array}
 	 */
 	const [allMovies, setAllMovies] = useState([]);
 	/**
 	 * State and setter for the movies displayed on the page.
-	 * @type {[Array, Function]}
+	 * @type {Array}
 	 */
 	const [displayedMovies, setDisplayedMovies] = useState([]);
 	/**
 	 * State and setter for isLoading.
-	 * @type {[boolean, Function]}
+	 * @type {boolean}
 	 */
 	const [isLoading, setIsLoading] = useState(false);
 	/**
 	 * State and setter for the selected genre by the user.
-	 * @type {[null, Function]}
+	 * @type {Object}
 	 */
 	const [selectedGenre, setSelectedGenre] = useState(null);
 	/**
 	 * State and setter for showFilter.
-	 * @type {[boolean, Function]}
+	 * @type {boolean}
 	 */
 	const [showFilter, setShowFilter] = useState(false);
 	/**

@@ -7,20 +7,21 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "vite --port 8000",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "doc": "jsdoc -c jsdoc.json"
   },
   "author": "Clément Dekeister and Martin Raes )",
   "homepage": "https://gitlab.univ-lille.fr/react/",
   "license": "ISC",
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
+    "jsdoc": "^4.0.3",
     "prettier": "^3.2.5",
     "vite": "^5.1.4"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "axios": "^1.6.8",
-    "jsdoc": "^4.0.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

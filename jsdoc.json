@@ -1,0 +1,9 @@
+{
+    "source": {
+        "include": ["src", "src/app", "src/features", "src/features/movie", "src/features/ratings", "src/features/user"],
+        "exclude": ["node_modules", "test", ".vscode", "css", "dist", "docs", "images", "stubs"]
+    },
+    "opts": {
+        "destination": "./docs"
+    }
+}

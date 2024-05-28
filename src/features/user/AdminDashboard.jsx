@@ -17,12 +17,12 @@ import axios from 'axios';
 export default function AdminDashboard() {
 	/**
 	 * State and setter for every users in the database.
-	 * @type {[Array, Function]}
+	 * @type {Array}
 	 */
 	const [users, setUsers] = useState([]);
 	/**
 	 * State and setter for isLoading.
-	 * @type {[boolean, Function]}
+	 * @type {boolean}
 	 */
 	const [isLoading, setIsLoading] = useState(false);
 
