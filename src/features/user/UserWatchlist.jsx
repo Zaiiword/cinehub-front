@@ -38,7 +38,7 @@ export function UserWatchlist() {
 	useEffect(() => {
 		setIsLoading(true);
 		axios
-			.get('http://cinehub-back.us-east-1.elasticbeanstalk.com/user/me')
+			.get('http://localhost:8080/user/me')
 			.then(response => {
 				setUser(response.data);
 				console.log(response.data);
@@ -52,11 +52,9 @@ export function UserWatchlist() {
 	 * Fetch the user's data from the server.
 	 */
 	function fetchUser() {
-		axios
-			.get('http://cinehub-back.us-east-1.elasticbeanstalk.com/user/me')
-			.then(response => {
-				setUser(response.data);
-			});
+		axios.get('http://localhost:8080/user/me').then(response => {
+			setUser(response.data);
+		});
 	}
 
 	/**
@@ -66,9 +64,7 @@ export function UserWatchlist() {
 	 */
 	function removeMovie(movieId) {
 		axios
-			.delete(
-				`http://cinehub-back.us-east-1.elasticbeanstalk.com/user/watchlist/${movieId}`
-			)
+			.delete(`http://localhost:8080/user/watchlist/${movieId}`)
 			.then(() => {
 				fetchUser();
 			})

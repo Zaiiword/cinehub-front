@@ -28,7 +28,7 @@ function UserDetail() {
 	 */
 	useEffect(() => {
 		axios
-			.get('http://cinehub-back.us-east-1.elasticbeanstalk.com/user/me')
+			.get('http://localhost:8080/user/me')
 			.then(response => {
 				console.log(response.data);
 				setUser(response.data);

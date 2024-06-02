@@ -79,9 +79,7 @@ export default function MovieList() {
 		 */
 		const fetchUser = async () => {
 			try {
-				const response = await axios.get(
-					'http://cinehub-back.us-east-1.elasticbeanstalk.com/user/me'
-				);
+				const response = await axios.get('http://localhost:8080/user/me');
 				setUser(response.data);
 				console.log(response.data);
 			} catch (error) {
@@ -93,9 +91,7 @@ export default function MovieList() {
 		 */
 		const fetchAllMovies = async () => {
 			try {
-				const response = await axios.get(
-					'http://cinehub-back.us-east-1.elasticbeanstalk.com/movie'
-				);
+				const response = await axios.get('http://localhost:8080/movie');
 				setAllMovies(response.data);
 			} catch (error) {
 				console.error('Error:', error);
@@ -106,9 +102,7 @@ export default function MovieList() {
 		 */
 		const fetchGenres = async () => {
 			try {
-				const response = await axios.get(
-					'http://cinehub-back.us-east-1.elasticbeanstalk.com/movie/genres'
-				);
+				const response = await axios.get('http://localhost:8080/movie/genres');
 				setGenres(response.data);
 			} catch (error) {
 				console.error('Error:', error);

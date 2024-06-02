@@ -31,7 +31,7 @@ export default function AdminDashboard() {
 	 */
 	function fetchUsers() {
 		axios
-			.get('http://cinehub-back.us-east-1.elasticbeanstalk.com/user')
+			.get('http://localhost:8080/user')
 			.then(response => {
 				setUsers(response.data);
 			})
@@ -54,7 +54,7 @@ export default function AdminDashboard() {
 	function deleteUser(id) {
 		if (window.confirm('Are you sure you want to delete this user?')) {
 			axios
-				.delete(`http://cinehub-back.us-east-1.elasticbeanstalk.com/user/${id}`)
+				.delete(`http://localhost:8080/user/${id}`)
 				.then(() => {
 					setUsers(users.filter(user => user.id !== id));
 				})

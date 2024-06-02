@@ -29,9 +29,7 @@ export default function Search() {
 		setIsLoading(true);
 		console.log('here');
 		axios
-			.get(
-				`http://cinehub-back.us-east-1.elasticbeanstalk.com/movie/search?q=${query}`
-			)
+			.get(`http://localhost:8080/movie/search?q=${query}`)
 			.then(response => setMovies(response.data))
 			.then(() => setIsLoading(false))
 			.catch(err => console.log(err));

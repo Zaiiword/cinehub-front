@@ -29,7 +29,7 @@ function EditUserForm() {
 	 */
 	useEffect(() => {
 		axios
-			.get('http://cinehub-back.us-east-1.elasticbeanstalk.com/user/me')
+			.get('http://localhost:8080/user/me')
 			.then(response => {
 				setUserId(response.data.id);
 			})
@@ -47,14 +47,11 @@ function EditUserForm() {
 	const handleSubmit = async event => {
 		event.preventDefault();
 		try {
-			await axios.patch(
-				`http://cinehub-back.us-east-1.elasticbeanstalk.com/user/${userId}`,
-				{
-					username,
-					email,
-					newPassword,
-				}
-			);
+			await axios.patch(`http://localhost:8080/user/${userId}`, {
+				username,
+				email,
+				newPassword,
+			});
 			// setIsEditing(false);
 		} catch (error) {
 			console.error('Error:', error.response.data);
