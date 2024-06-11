@@ -55,7 +55,7 @@ export default function MovieDetail() {
 	 */
 	function fetchMovie() {
 		axios
-			.get(`http://localhost:8080/movie/${movieId}`)
+			.get(`http://backend.cinehub.ovh/movie/${movieId}`)
 			.then(data => {
 				setMovie(data.data);
 			})
@@ -67,7 +67,7 @@ export default function MovieDetail() {
 	 */
 	function fetchUser() {
 		//get the user
-		axios.get('http://localhost:8080/user/me').then(response => {
+		axios.get('http://backend.cinehub.ovh/user/me').then(response => {
 			setUser(response.data);
 		});
 	}
@@ -83,7 +83,7 @@ export default function MovieDetail() {
 			comment: commentRef.current.value,
 		};
 		axios
-			.post(`http://localhost:8080/movie/${movieId}/review`, review, {
+			.post(`http://backend.cinehub.ovh/movie/${movieId}/review`, review, {
 				headers: {
 					'Content-Type': 'application/json',
 				},
@@ -108,11 +108,15 @@ export default function MovieDetail() {
 	 * @param {string} reviewId - The ID of the review to like.
 	 */
 	const handleLike = async reviewId => {
-		await axios.patch(`http://localhost:8080/movie/review/${reviewId}`, user, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		await axios.patch(
+			`http://backend.cinehub.ovh/movie/review/${reviewId}`,
+			user,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
 		fetchMovie();
 	};
@@ -121,7 +125,7 @@ export default function MovieDetail() {
 	 * Handles the addition of the movie to the user's watchlist by sending the informations to the server.
 	 */
 	const handleWatchList = async () => {
-		await axios.post(`http://localhost:8080/user/watchlist/${movieId}`, {
+		await axios.post(`http://backend.cinehub.ovh/user/watchlist/${movieId}`, {
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -135,7 +139,7 @@ export default function MovieDetail() {
 	 * @param {string} id - The ID of the review to delete.
 	 */
 	function deleteReview(id) {
-		axios.delete(`http://localhost:8080/movie/review/${id}`).then(() => {
+		axios.delete(`http://backend.cinehub.ovh/movie/review/${id}`).then(() => {
 			fetchMovie();
 		});
 	}

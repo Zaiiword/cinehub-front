@@ -29,7 +29,7 @@ function EditUserForm() {
 	 */
 	useEffect(() => {
 		axios
-			.get('http://localhost:8080/user/me')
+			.get('http://backend.cinehub.ovh/user/me')
 			.then(response => {
 				setUserId(response.data.id);
 			})
@@ -47,7 +47,7 @@ function EditUserForm() {
 	const handleSubmit = async event => {
 		event.preventDefault();
 		try {
-			await axios.patch(`http://localhost:8080/user/${userId}`, {
+			await axios.patch(`http://backend.cinehub.ovh/user/${userId}`, {
 				username,
 				email,
 				newPassword,

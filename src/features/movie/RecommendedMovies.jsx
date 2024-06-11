@@ -28,7 +28,7 @@ export default function RecommendedMovies({ userId }) {
 	 */
 	useEffect(() => {
 		axios
-			.get(`http://localhost:8080/movie/recommendations/${userId}`)
+			.get(`http://backend.cinehub.ovh/movie/recommendations/${userId}`)
 			.then(response => {
 				setRecommendedMovies(response.data);
 			})

@@ -28,7 +28,7 @@ function UserDetail() {
 	 */
 	useEffect(() => {
 		axios
-			.get('http://localhost:8080/user/me')
+			.get('http://backend.cinehub.ovh/user/me')
 			.then(response => {
 				console.log(response.data);
 				setUser(response.data);

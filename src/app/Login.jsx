@@ -79,8 +79,8 @@ function AuthPage() {
 		}
 
 		const url = isLogin
-			? 'http://localhost:8080/login'
-			: 'http://localhost:8080/user/register';
+			? 'http://backend.cinehub.ovh/login'
+			: 'http://backend.cinehub.ovh/user/register';
 		const userData = isLogin
 			? { username, password }
 			: {
